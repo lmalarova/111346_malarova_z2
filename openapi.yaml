@@ -1,0 +1,169 @@
+openapi: 3.0.1
+info:
+  title: Restaurants API
+  description: Simple API to manage restaurant menus
+  version: "0.1"
+servers:
+  - url: https://site29.webte.fei.stuba.sk
+paths:
+  /restaurants/api:
+    get:
+      description: Get meals of all restaurants.
+      responses:
+        "200":
+          description: OK
+      servers:
+        - url: https://site29.webte.fei.stuba.sk
+    post:
+      description: Create new meal. Meal is added to every day of week.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                price:
+                  type: string
+                name:
+                  type: string
+                place:
+                  type: string
+                day:
+                  type: string
+            examples:
+              "0":
+                value: >-
+                  { "name": "jedlo", "price": "1.5", "place": "place", "day":
+                  "1" }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: string
+              examples:
+                "0":
+                  value: '{"success":"Data created successfully"}'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: string
+              examples:
+                "0":
+                  value: '{"error":"Bad Request"}'
+      servers:
+        - url: https://site29.webte.fei.stuba.sk
+  /restaurants/api?{day}:
+    get:
+      description: Get meals of all restaurants for provided day.
+      parameters:
+        - name: day
+          in: query
+          schema:
+            type: string
+          example: "1"
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: string
+              examples:
+                "0":
+                  value: '{"error":"Not Found"}'
+      servers:
+        - url: https://site29.webte.fei.stuba.sk
+  /restaurants/api?{id}:
+    put:
+      description: Edit price of meal.
+      parameters:
+        - name: id
+          in: query
+          schema:
+            type: string
+          example: "4125"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                price:
+                  type: string
+                name:
+                  type: string
+                place:
+                  type: string
+                day:
+                  type: string
+            examples:
+              "0":
+                value: '{"price": "1.5"}'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: string
+              examples:
+                "0":
+                  value: '{"success":"Data updated successfully"}'
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: string
+              examples:
+                "0":
+                  value: '{"error":"Not Found"}'
+      servers:
+        - url: https://site29.webte.fei.stuba.sk
+  /restaurants/api?{name}:
+    delete:
+      description: Delete offer of restaurant.
+      parameters:
+        - name: name
+          in: query
+          schema:
+            type: string
+          example: '"Venza"'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: string
+              examples:
+                "0":
+                  value: '{"success":"Data deleted successfully"}'
+      servers:
+        - url: https://site29.webte.fei.stuba.sk
+    servers:
+      - url: https://site29.webte.fei.stuba.sk

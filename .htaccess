@@ -1,0 +1,4 @@
+RewriteEngine On
+
+RewriteRule ^api/zadanie2/meals$ api/index.php [L,QSA]
+RewriteRule ^api/zadanie2/meals/(\d+)$ api/index.php?id=$1 [L,QSA]
